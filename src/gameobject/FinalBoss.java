@@ -7,6 +7,7 @@ package gameobject;
 
 import state.GameWorldState;
 import effect.Animation;
+import effect.AnimationHandler;
 import effect.CacheDataLoader;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -18,9 +19,10 @@ import java.util.Hashtable;
  */
 public class FinalBoss extends Human {
 
-    private Animation idleforward, idleback;
-    private Animation shootingforward, shootingback;
-    private Animation slideforward, slideback;
+	 public String name="finalBoss";
+//    private Animation idleforward, idleback;
+//    private Animation shootingforward, shootingback;
+//    private Animation slideforward, slideback;
     
     private long startTimeForAttacked;
     
@@ -29,19 +31,20 @@ public class FinalBoss extends Human {
     private int attackIndex = 0;
     private long lastAttackTime;
     
+    public AnimationHandler animationH=new AnimationHandler(name);
     public FinalBoss(float x, float y, GameWorldState gameWorld) {
         super(x, y, 110, 150, 0.1f, 100, gameWorld);
-        idleback = CacheDataLoader.getInstance().getAnimation("boss_idle");
-        idleforward = CacheDataLoader.getInstance().getAnimation("boss_idle");
-        idleforward.flipAllImage();
-        
-        shootingback = CacheDataLoader.getInstance().getAnimation("boss_shooting");
-        shootingforward = CacheDataLoader.getInstance().getAnimation("boss_shooting");
-        shootingforward.flipAllImage();
-        
-        slideback = CacheDataLoader.getInstance().getAnimation("boss_slide");
-        slideforward = CacheDataLoader.getInstance().getAnimation("boss_slide");
-        slideforward.flipAllImage();
+//        idleback = CacheDataLoader.getInstance().getAnimation("boss_idle");
+//        idleforward = CacheDataLoader.getInstance().getAnimation("boss_idle");
+//        idleforward.flipAllImage();
+//        
+//        shootingback = CacheDataLoader.getInstance().getAnimation("boss_shooting");
+//        shootingforward = CacheDataLoader.getInstance().getAnimation("boss_shooting");
+//        shootingforward.flipAllImage();
+//        
+//        slideback = CacheDataLoader.getInstance().getAnimation("boss_slide");
+//        slideforward = CacheDataLoader.getInstance().getAnimation("boss_slide");
+//        slideforward.flipAllImage();
         
         setTimeForNoBehurt(500*1000000);
         setDamage(10);
@@ -166,29 +169,29 @@ public class FinalBoss extends Human {
             
             if(attackType[attackIndex].equals("NONE")){
                 if(getDirection() == RIGHT_DIR){
-                    idleforward.Update(System.nanoTime());
-                    idleforward.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY(), g2);
+                    animationH.idleforward.Update(System.nanoTime());
+                    animationH.idleforward.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY(), g2);
                 }else{
-                    idleback.Update(System.nanoTime());
-                    idleback.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY(), g2);
+                	animationH.idleback.Update(System.nanoTime());
+                	animationH.idleback.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY(), g2);
                 }
             }else if(attackType[attackIndex].equals("shooting")){
                 
                 if(getDirection() == RIGHT_DIR){
-                    shootingforward.Update(System.nanoTime());
-                    shootingforward.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY(), g2);
+                	animationH.shootingforward.Update(System.nanoTime());
+                	animationH.shootingforward.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY(), g2);
                 }else{
-                    shootingback.Update(System.nanoTime());
-                    shootingback.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY(), g2);
+                	animationH.shootingback.Update(System.nanoTime());
+                	animationH.shootingback.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY(), g2);
                 }
                 
             }else if(attackType[attackIndex].equals("slide")){
                 if(getSpeedX() > 0){
-                    slideforward.Update(System.nanoTime());
-                    slideforward.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY() + 50, g2);
+                	animationH.slideforward.Update(System.nanoTime());
+                	animationH.slideforward.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY() + 50, g2);
                 }else{
-                    slideback.Update(System.nanoTime());
-                    slideback.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY() + 50, g2);
+                	animationH.slideback.Update(System.nanoTime());
+                	animationH.slideback.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY() + 50, g2);
                 }
             }
         }

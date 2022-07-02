@@ -7,6 +7,7 @@ package gameobject;
 
 import state.GameWorldState;
 import effect.Animation;
+import effect.AnimationHandler;
 import effect.CacheDataLoader;
 import java.applet.AudioClip;
 import java.awt.Graphics2D;
@@ -18,17 +19,18 @@ import java.awt.Rectangle;
  */
 public class RedEyeDevil extends ParticularObject {
 
-    private Animation forwardAnim, backAnim;
-    
+	public String name="redeye";
     private long startTimeToShoot;
     
     private AudioClip shooting;
     
+    public AnimationHandler animationH=new AnimationHandler(name);
+    
     public RedEyeDevil(float x, float y, GameWorldState gameWorld) {
         super(x, y, 127, 89, 0, 100, gameWorld);
-        backAnim = CacheDataLoader.getInstance().getAnimation("redeye");
-        forwardAnim = CacheDataLoader.getInstance().getAnimation("redeye");
-        forwardAnim.flipAllImage();
+//        animationH.backAnim = CacheDataLoader.getInstance().getAnimation("redeye");
+//        animationH.forwardAnim = CacheDataLoader.getInstance().getAnimation("redeye");
+//        animationH.forwardAnim.flipAllImage();
         startTimeToShoot = 0;
         setDamage(10);
         setTimeForNoBehurt(300000000);
@@ -73,12 +75,12 @@ public class RedEyeDevil extends ParticularObject {
                 // plash...
             }else{
                 if(getDirection() == LEFT_DIR){
-                    backAnim.Update(System.nanoTime());
-                    backAnim.draw((int) (getPosX() - getGameWorld().camera.getPosX()), 
+                    animationH.backAnim.Update(System.nanoTime());
+                    animationH.backAnim.draw((int) (getPosX() - getGameWorld().camera.getPosX()), 
                             (int)(getPosY() - getGameWorld().camera.getPosY()), g2);
                 }else{
-                    forwardAnim.Update(System.nanoTime());
-                    forwardAnim.draw((int) (getPosX() - getGameWorld().camera.getPosX()), 
+                    animationH.forwardAnim.Update(System.nanoTime());
+                    animationH.forwardAnim.draw((int) (getPosX() - getGameWorld().camera.getPosX()), 
                             (int)(getPosY() - getGameWorld().camera.getPosY()), g2);
                 }
             }

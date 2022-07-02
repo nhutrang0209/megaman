@@ -7,6 +7,7 @@ package gameobject;
 
 import state.GameWorldState;
 import effect.Animation;
+import effect.AnimationHandler;
 import effect.CacheDataLoader;
 import static gameobject.ParticularObject.LEFT_DIR;
 import static gameobject.ParticularObject.NOBEHURT;
@@ -20,18 +21,18 @@ import java.awt.Rectangle;
  */
 public class RobotR extends ParticularObject {
 
-    private Animation forwardAnim, backAnim;
-    
+	public String name="robotR";
     private long startTimeToShoot;
     private float x1, x2, y1, y2;
     
     private AudioClip shooting;
     
+    public AnimationHandler animationH=new AnimationHandler(name);
     public RobotR(float x, float y, GameWorldState gameWorld) {
         super(x, y, 127, 89, 0, 100, gameWorld);
-        backAnim = CacheDataLoader.getInstance().getAnimation("robotR");
-        forwardAnim = CacheDataLoader.getInstance().getAnimation("robotR");
-        forwardAnim.flipAllImage();
+//        backAnim = CacheDataLoader.getInstance().getAnimation("robotR");
+//        forwardAnim = CacheDataLoader.getInstance().getAnimation("robotR");
+//        forwardAnim.flipAllImage();
         startTimeToShoot = 0;
         setTimeForNoBehurt(300000000);
         setDamage(10);
@@ -102,12 +103,12 @@ public class RobotR extends ParticularObject {
                 // plash...
             }else{
                 if(getDirection() == LEFT_DIR){
-                    backAnim.Update(System.nanoTime());
-                    backAnim.draw((int) (getPosX() - getGameWorld().camera.getPosX()), 
+                    animationH.backAnim.Update(System.nanoTime());
+                    animationH.backAnim.draw((int) (getPosX() - getGameWorld().camera.getPosX()), 
                             (int)(getPosY() - getGameWorld().camera.getPosY()), g2);
                 }else{
-                    forwardAnim.Update(System.nanoTime());
-                    forwardAnim.draw((int) (getPosX() - getGameWorld().camera.getPosX()), 
+                    animationH.forwardAnim.Update(System.nanoTime());
+                    animationH.forwardAnim.draw((int) (getPosX() - getGameWorld().camera.getPosX()), 
                             (int)(getPosY() - getGameWorld().camera.getPosY()), g2);
                 }
             }

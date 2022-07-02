@@ -7,6 +7,7 @@ package gameobject;
 
 import state.GameWorldState;
 import effect.Animation;
+import effect.AnimationHandler;
 import effect.CacheDataLoader;
 import static gameobject.ParticularObject.LEFT_DIR;
 import static gameobject.ParticularObject.NOBEHURT;
@@ -19,15 +20,16 @@ import java.awt.Rectangle;
  */
 public class SmallRedGun extends ParticularObject{
 
-    private Animation forwardAnim, backAnim;
+	public String name="smallredgun";
     
     private long startTimeToShoot;
     
+    public AnimationHandler animationH=new AnimationHandler(name);
     public SmallRedGun(float x, float y, GameWorldState gameWorld) {
         super(x, y, 127, 89, 0, 100, gameWorld);
-        backAnim = CacheDataLoader.getInstance().getAnimation("smallredgun");
-        forwardAnim = CacheDataLoader.getInstance().getAnimation("smallredgun");
-        forwardAnim.flipAllImage();
+//        backAnim = CacheDataLoader.getInstance().getAnimation("smallredgun");
+//        forwardAnim = CacheDataLoader.getInstance().getAnimation("smallredgun");
+//        forwardAnim.flipAllImage();
         startTimeToShoot = 0;
         setTimeForNoBehurt(300000000);
     }
@@ -74,12 +76,12 @@ public class SmallRedGun extends ParticularObject{
                 // plash...
             }else{
                 if(getDirection() == LEFT_DIR){
-                    backAnim.Update(System.nanoTime());
-                    backAnim.draw((int) (getPosX() - getGameWorld().camera.getPosX()), 
+                    animationH.backAnim.Update(System.nanoTime());
+                    animationH.backAnim.draw((int) (getPosX() - getGameWorld().camera.getPosX()), 
                             (int)(getPosY() - getGameWorld().camera.getPosY()), g2);
                 }else{
-                    forwardAnim.Update(System.nanoTime());
-                    forwardAnim.draw((int) (getPosX() - getGameWorld().camera.getPosX()), 
+                    animationH.forwardAnim.Update(System.nanoTime());
+                    animationH.forwardAnim.draw((int) (getPosX() - getGameWorld().camera.getPosX()), 
                             (int)(getPosY() - getGameWorld().camera.getPosY()), g2);
                 }
             }

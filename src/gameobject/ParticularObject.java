@@ -21,6 +21,7 @@ public abstract class ParticularObject extends GameObject {// đối tượng c�
     public static final int NOBEHURT = 4;
     private int state = ALIVE;
     
+    public String name;
     private float width;
     private float height;
     private float mass;

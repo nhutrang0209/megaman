@@ -150,13 +150,13 @@ public class CacheDataLoader {
                 instance.background_map[i][j] = Integer.parseInt(str[j]);
         }
         
-        for(int i = 0;i < numberOfRows;i++){
-            
-            for(int j = 0;j<numberOfColumns;j++)
-                System.out.print(" "+instance.background_map[i][j]);
-            
-            System.out.println();
-        }
+//        for(int i = 0;i < numberOfRows;i++){
+//            
+//            for(int j = 0;j<numberOfColumns;j++)
+//                System.out.print(" "+instance.background_map[i][j]);
+//            
+//            System.out.println();
+//        }
         
         br.close();
         
@@ -184,13 +184,13 @@ public class CacheDataLoader {
                 instance.phys_map[i][j] = Integer.parseInt(str[j]);
         }
         
-        for(int i = 0;i < numberOfRows;i++){
-            
-            for(int j = 0;j<numberOfColumns;j++)
-                System.out.print(" "+instance.phys_map[i][j]);
-            
-            System.out.println();
-        }
+//        for(int i = 0;i < numberOfRows;i++){
+//            
+//            for(int j = 0;j<numberOfColumns;j++)
+//                System.out.print(" "+instance.phys_map[i][j]);
+//            
+//            System.out.println();
+//        }
         
         br.close();
         

@@ -394,6 +394,10 @@ public class GameWorldState extends State {
             case KeyEvent.VK_DOWN:
                 megaMan.dick();
                 break;
+            case KeyEvent.VK_UP:
+            	megaMan.jump();
+            	break;
+            	
                 
             case KeyEvent.VK_RIGHT:
                 megaMan.setDirection(megaMan.RIGHT_DIR);
@@ -429,11 +433,7 @@ public class GameWorldState extends State {
                 }
                 break;
                 
-            case KeyEvent.VK_SPACE:
-                megaMan.jump();
-                break;
-                
-            case KeyEvent.VK_A:
+            case KeyEvent.VK_F:
                 megaMan.attack();
                 break;
                 
