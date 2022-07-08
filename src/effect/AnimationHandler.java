@@ -1,11 +1,15 @@
 package effect;
 
-import gameobject.DarkRaise;
 import gameobject.MegaMan;
 import gameobject.ParticularObject;
 import gameobject.RedEyeDevil;
 import gameobject.RobotR;
 import gameobject.SmallRedGun;
+
+import java.awt.Graphics2D;
+
+import gameobject.BlueFire;
+import gameobject.GameObject;
 
 public class AnimationHandler {
 
@@ -17,12 +21,17 @@ public class AnimationHandler {
 	    public Animation landingForwardAnim, landingBackAnim;
 	    public Animation behurtBackAnim,behurtForwardAnim;
 	    public Animation climWallForward, climWallBack;
+	  //BlueFire Animation
+	    public Animation  forwardBulletAnim, backBulletAnim;
 	  // Monster Animation  
 	    public Animation forwardAnim, backAnim;
-	 // Final Animation
+	 // FinalBoss Animation
 	    public Animation idleforward, idleback;
 	    public Animation shootingforward, shootingback;
 	    public Animation slideforward, slideback;
+	    
+	    public Animation forwardBulletAnimUp, forwardBulletAnimDown;
+	    public Animation backBulletAnimUp, backBulletAnimDown;
 	    public AnimationHandler(String name) {
 	    	switch(name) {
 	    	case "megaMan":
@@ -81,6 +90,39 @@ public class AnimationHandler {
 	            slideforward = CacheDataLoader.getInstance().getAnimation("boss_slide");
 	            slideforward.flipAllImage();
 	    		break;
+	    	case "bluefire":
+	            forwardBulletAnim = CacheDataLoader.getInstance().getAnimation("bluefire");
+	            backBulletAnim = CacheDataLoader.getInstance().getAnimation("bluefire");
+	            backBulletAnim.flipAllImage();
+	            break;
+	    	case "redeyebullet":
+	    		forwardBulletAnim = CacheDataLoader.getInstance().getAnimation("redeyebullet");//tạo animation
+	            backBulletAnim = CacheDataLoader.getInstance().getAnimation("redeyebullet");
+	            backBulletAnim.flipAllImage();
+	            break;
+	    	case "yellow_flower_bullet":
+	    		forwardBulletAnim = CacheDataLoader.getInstance().getAnimation("yellow_flower_bullet");//tạo animation
+	            backBulletAnim = CacheDataLoader.getInstance().getAnimation("yellow_flower_bullet");
+	            backBulletAnim.flipAllImage();
+	            break;
+	    	case "robotRbullet":
+	    		forwardBulletAnim = CacheDataLoader.getInstance().getAnimation("robotRbullet");//tạo animation
+	            backBulletAnim = CacheDataLoader.getInstance().getAnimation("robotRbullet");
+	            backBulletAnim.flipAllImage();
+	            break;
+	    	case "rocket":
+	    		backBulletAnimUp = CacheDataLoader.getInstance().getAnimation("rocketUp");
+	            backBulletAnimDown = CacheDataLoader.getInstance().getAnimation("rocketDown");
+	            backBulletAnim = CacheDataLoader.getInstance().getAnimation("rocket");
+	            
+	            forwardBulletAnimUp = CacheDataLoader.getInstance().getAnimation("rocketUp");
+	            forwardBulletAnimUp.flipAllImage();
+	            forwardBulletAnimDown = CacheDataLoader.getInstance().getAnimation("rocketDown");
+	            forwardBulletAnimDown.flipAllImage();
+	            forwardBulletAnim = CacheDataLoader.getInstance().getAnimation("rocket");
+	            forwardBulletAnim.flipAllImage();
+
+	            break; 
 	    	default:
 	    		backAnim = CacheDataLoader.getInstance().getAnimation(name);
 		        forwardAnim = CacheDataLoader.getInstance().getAnimation(name);
@@ -88,31 +130,48 @@ public class AnimationHandler {
 	    		break;
 	    	}
 	    }
-//	    public AnimationHandler(MegaMan megaMan) {
-//	    	System.out.println("Hello "+megaMan.name);
-//	    	}
-//
-//	    public AnimationHandler(RedEyeDevil redEyeDevil) {
-//	    	backAnim = CacheDataLoader.getInstance().getAnimation("redeye");
-//	        forwardAnim = CacheDataLoader.getInstance().getAnimation("redeye");
-//	        forwardAnim.flipAllImage();
-//	    }
-//	    
-//	    public AnimationHandler(RobotR robotR) {
-//	    	 backAnim = CacheDataLoader.getInstance().getAnimation("robotR");
-//	         forwardAnim = CacheDataLoader.getInstance().getAnimation("robotR");
-//	         forwardAnim.flipAllImage();
-//	    }
-//	    	
-//	    public AnimationHandler(SmallRedGun smallRedGun) {
-//	    	backAnim = CacheDataLoader.getInstance().getAnimation("smallredgun");
-//	        forwardAnim = CacheDataLoader.getInstance().getAnimation("smallredgun");
-//	        forwardAnim.flipAllImage();
-//	    }
-//	    public AnimationHandler(DarkRaise darkRaise) {
-//	    	backAnim = CacheDataLoader.getInstance().getAnimation("darkraise");
-//	        forwardAnim = CacheDataLoader.getInstance().getAnimation("darkraise");
-//	        forwardAnim.flipAllImage();
-//	    }
-//	    
+	    
+	    public void MegaLanding() {
+	    	 landingBackAnim.reset();
+             runForwardAnim.reset();
+             runBackAnim.reset();
+	    }
+	    
+	    public void MegaStandup() {
+	        idleForwardAnim.reset();
+	        idleBackAnim.reset();
+	        dickForwardAnim.reset();
+	        dickBackAnim.reset();
+	    }
+
+	    public void MegaStoprun() {
+	    	runForwardAnim.reset();
+	        runBackAnim.reset();
+	        runForwardAnim.unIgnoreFrame(0);
+	        runBackAnim.unIgnoreFrame(0);
+	    }
+	    
+	    public void Megaflyreset() {
+            flyBackAnim.reset();
+            flyForwardAnim.reset();
+	    }
+	    
+	    public void BulletFIgnore012() {
+	    	forwardBulletAnim.setIgnoreFrame(0);
+        	forwardBulletAnim.setIgnoreFrame(1);
+        	forwardBulletAnim.setIgnoreFrame(2);
+	    }
+	    
+	    public void BulletBIgnore012() {
+	    	backBulletAnim.setIgnoreFrame(0);
+        	backBulletAnim.setIgnoreFrame(1);
+        	backBulletAnim.setIgnoreFrame(2);
+	    }
+	    public boolean BulletFMoving() {
+	    	return !forwardBulletAnim.isIgnoreFrame(0) && forwardBulletAnim.getCurrentFrame() == 3;
+	    }
+	    public boolean BulletBMoving() {
+	    	return !backBulletAnim.isIgnoreFrame(0) && backBulletAnim.getCurrentFrame() == 3;
+	    }
+	    
 }

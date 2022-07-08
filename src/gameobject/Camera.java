@@ -7,14 +7,9 @@ package gameobject;
 
 import state.GameWorldState;
 
-/**
- *
- * @author phamn
- */
 public class Camera extends GameObject {
 
-    private float widthView;
-    private float heightView;
+    private float widthView, heightView;
     
     private boolean isLocked = false;
     

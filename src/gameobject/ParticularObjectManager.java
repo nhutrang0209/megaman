@@ -6,15 +6,15 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ParticularObjectManager {
+public class ParticularObjectManager {//quản lý tất cả Object trong game
 
-    protected List<ParticularObject> particularObjects;
+    protected List<ParticularObject> particularObjects;//đưa vào list cac object
 
     private GameWorldState gameWorld;
     
     public ParticularObjectManager(GameWorldState gameWorld){
         
-        particularObjects = Collections.synchronizedList(new LinkedList<ParticularObject>());
+        particularObjects = Collections.synchronizedList(new LinkedList<ParticularObject>());//khởi tạo đồng bộ list
         this.gameWorld = gameWorld;
         
     }
@@ -23,15 +23,14 @@ public class ParticularObjectManager {
         return gameWorld;
     }
     
+    //add them object(vi du them vien dan)
     public void addObject(ParticularObject particularObject){
-        
-        
         synchronized(particularObjects){
             particularObjects.add(particularObject);
         }
         
     }
-    
+    //xoa 1 object khoi list(vi du vien dan)
     public void RemoveObject(ParticularObject particularObject){
         synchronized(particularObjects){
         
@@ -44,7 +43,7 @@ public class ParticularObjectManager {
             }
         }
     }
-    
+    //phương thức tra ve doi tuong va cham voi doi tuong truyen vao
     public ParticularObject getCollisionWidthEnemyObject(ParticularObject object){
         synchronized(particularObjects){
             for(int id = 0; id < particularObjects.size(); id++){
@@ -59,8 +58,8 @@ public class ParticularObjectManager {
         }
         return null;
     }
-    
-    public void UpdateObjects(){
+    //phương thức update các object
+    public void UpdateObjects(){//duyệt qua rồi update từng object
         
         synchronized(particularObjects){
             for(int id = 0; id < particularObjects.size(); id++){
@@ -79,7 +78,7 @@ public class ParticularObjectManager {
         //System.out.println("Camerawidth  = "+camera.getWidth());
         
     }
-    
+    //draw cac object
     public void draw(Graphics2D g2){
         synchronized(particularObjects){
             for(ParticularObject object: particularObjects)

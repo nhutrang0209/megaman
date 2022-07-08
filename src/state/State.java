@@ -8,10 +8,6 @@ package state;
 import userinterface.GamePanel;
 import java.awt.image.BufferedImage;
 
-/**
- *
- * @author phamn
- */
 public abstract class State {
     
     protected GamePanel gamePanel;

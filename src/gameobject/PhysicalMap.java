@@ -30,7 +30,7 @@ public class PhysicalMap extends GameObject{//tương tác giúp nhân vật lu�
     public void Update() {}
 
     
-    public Rectangle haveCollisionWithTop(Rectangle rect){
+    public Rectangle haveCollisionWithTop(Rectangle rect){// va với trần
 
         int posX1 = rect.x/tileSize;
         posX1 -= 2;
@@ -58,14 +58,14 @@ public class PhysicalMap extends GameObject{//tương tác giúp nhân vật lu�
     }
     
     
-    public Rectangle haveCollisionWithLand(Rectangle rect){
+    public Rectangle haveCollisionWithLand(Rectangle rect){//chạm đất hay khôgn
 
-        int posX1 = rect.x/tileSize;
-        posX1 -= 2;
-        int posX2 = (rect.x + rect.width)/tileSize;
+        int posX1 = rect.x/tileSize; // trái trên của react/...index của arr
+        posX1 -= 2;// trừ đi sai số để có kết quả tốt nhất
+        int posX2 = (rect.x + rect.width)/tileSize;//index tiếp theo
         posX2 += 2;
 
-        int posY = (rect.y + rect.height)/tileSize;
+        int posY = (rect.y + rect.height)/tileSize;// kiểm tra chạm đất
 
         if(posX1 < 0) posX1 = 0;
         
@@ -74,7 +74,7 @@ public class PhysicalMap extends GameObject{//tương tác giúp nhân vật lu�
             for(int x = posX1; x <= posX2; x++){
                 
                 if(phys_map[y][x] == 1){
-                    Rectangle r = new Rectangle((int) getPosX() + x * tileSize, (int) getPosY() + y * tileSize, tileSize, tileSize);
+                    Rectangle r = new Rectangle((int) getPosX() + x * tileSize, (int) getPosY() + y * tileSize, tileSize, tileSize);//tọa độ gốc
                     if(rect.intersects(r))
                         return r;
                 }

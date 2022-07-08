@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gameobject;
 
 import state.GameWorldState;
@@ -15,24 +10,15 @@ import java.applet.AudioClip;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-/**
- *
- * @author phamn
- */
 public class RobotR extends ParticularObject {
 
-	public String name="robotR";
     private long startTimeToShoot;
     private float x1, x2, y1, y2;
     
     private AudioClip shooting;
     
-    public AnimationHandler animationH=new AnimationHandler(name);
     public RobotR(float x, float y, GameWorldState gameWorld) {
-        super(x, y, 127, 89, 0, 100, gameWorld);
-//        backAnim = CacheDataLoader.getInstance().getAnimation("robotR");
-//        forwardAnim = CacheDataLoader.getInstance().getAnimation("robotR");
-//        forwardAnim.flipAllImage();
+        super(x, y, 127, 89,"robotR", 0, 100, gameWorld);
         startTimeToShoot = 0;
         setTimeForNoBehurt(300000000);
         setDamage(10);
@@ -113,7 +99,6 @@ public class RobotR extends ParticularObject {
                 }
             }
         }
-        //drawBoundForCollisionWithEnemy(g2);
     }
     
 }

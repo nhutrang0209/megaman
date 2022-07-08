@@ -14,10 +14,6 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
-/**
- *
- * @author phamn
- */
 public class MenuState extends State {
     
     public final int NUMBER_OF_BUTTON = 2;

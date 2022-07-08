@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gameobject;
 
 import state.GameWorldState;
@@ -13,47 +8,29 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.Hashtable;
 
-/**
- *
- * @author phamn
- */
+//kế thừa lớp cha Human
 public class FinalBoss extends Human {
 
-	 public String name="finalBoss";
-//    private Animation idleforward, idleback;
-//    private Animation shootingforward, shootingback;
-//    private Animation slideforward, slideback;
     
     private long startTimeForAttacked;
     
-    private Hashtable<String, Long> timeAttack = new Hashtable<String, Long>(); 
-    private String[] attackType = new String[4];
-    private int attackIndex = 0;
-    private long lastAttackTime;
+    private Hashtable<String, Long> timeAttack = new Hashtable<String, Long>(); //<hành động, thời gian của hành động>
+    private String[] attackType = new String[4];//mảng các hành động
+    private int attackIndex = 0;//tăng theo mảng attackType
+    private long lastAttackTime;//hoạt động trước kết thúc lúc nào, để tính thời gian cho hoạt động tiếp theo 
     
-    public AnimationHandler animationH=new AnimationHandler(name);
+
     public FinalBoss(float x, float y, GameWorldState gameWorld) {
-        super(x, y, 110, 150, 0.1f, 100, gameWorld);
-//        idleback = CacheDataLoader.getInstance().getAnimation("boss_idle");
-//        idleforward = CacheDataLoader.getInstance().getAnimation("boss_idle");
-//        idleforward.flipAllImage();
-//        
-//        shootingback = CacheDataLoader.getInstance().getAnimation("boss_shooting");
-//        shootingforward = CacheDataLoader.getInstance().getAnimation("boss_shooting");
-//        shootingforward.flipAllImage();
-//        
-//        slideback = CacheDataLoader.getInstance().getAnimation("boss_slide");
-//        slideforward = CacheDataLoader.getInstance().getAnimation("boss_slide");
-//        slideforward.flipAllImage();
-        
+        super(x, y, 110, 150,"finalBoss", 0.1f, 100, gameWorld);
         setTimeForNoBehurt(500*1000000);
         setDamage(10);
-        
+        //khởi tạo mảng
         attackType[0] = "NONE";
         attackType[1] = "shooting";
         attackType[2] = "NONE";
         attackType[3] = "slide";
         
+        //thời gian của các hoạt động
         timeAttack.put("NONE", new Long(2000));
         timeAttack.put("shooting", new Long(500));
         timeAttack.put("slide", new Long(5000));
@@ -63,6 +40,7 @@ public class FinalBoss extends Human {
     public void Update(){
         super.Update();
         
+        //luôn luôn hướng về megaman để attack
         if(getGameWorld().megaMan.getPosX() > getPosX())
             setDirection(RIGHT_DIR);
         else setDirection(LEFT_DIR);
@@ -75,6 +53,7 @@ public class FinalBoss extends Human {
         }
         
         if(!attackType[attackIndex].equals("NONE")){
+            //hoạt động bắn
             if(attackType[attackIndex].equals("shooting")){
                 
                 Bullet bullet = new RocketBullet(getPosX(), getPosY() - 50, getGameWorld());
@@ -83,7 +62,9 @@ public class FinalBoss extends Human {
                 bullet.setTeamType(getTeamType());
                 getGameWorld().bulletManager.addObject(bullet);
                 
-            }else if(attackType[attackIndex].equals("slide")){
+            }else if(attackType[attackIndex].equals("slide"))
+            //hoạt động chạy qua chạy lại
+            {
                 
                 if(getGameWorld().physicalMap.haveCollisionWithLeftWall(getBoundForCollisionWithMap())!=null)
                     setSpeedX(5);
@@ -99,7 +80,7 @@ public class FinalBoss extends Human {
         }
         
     }
-    
+    //ghi đè các phương thức của lớp cha
     @Override
     public void run() {
         
@@ -137,7 +118,7 @@ public class FinalBoss extends Human {
             lastAttackTime = System.currentTimeMillis();
             
             attackIndex ++;
-            if(attackIndex >= attackType.length) attackIndex = 0;
+            if(attackIndex >= attackType.length) attackIndex = 0;//nếu index > length thì bắt đầu lại từ đầu
             
             if(attackType[attackIndex].equals("slide")){
                 if(getPosX() < getGameWorld().megaMan.getPosX()) setSpeedX(5);
@@ -158,7 +139,8 @@ public class FinalBoss extends Human {
         }else
             return getBoundForCollisionWithMap();
     }
-
+    
+    //các animation tương ứng với các trạng thái của finalBoss
     @Override
     public void draw(Graphics2D g2) {
         
@@ -195,7 +177,6 @@ public class FinalBoss extends Human {
                 }
             }
         }
-       // drawBoundForCollisionWithEnemy(g2);
     }
     
 }

@@ -10,18 +10,11 @@ public abstract class Button {
 	public static final int HOVER = 2;
 	
 	protected String text;
-	protected int posX;
-	protected int posY;
-	protected int width;
-	protected int height;
-	protected int paddingTextX;
-	protected int paddingTextY;
+	protected int posX, posY, width, height, paddingTextX, paddingTextY;
 	protected boolean enabled;
 	
 	protected int state;
-	protected Color bgColor;
-	protected Color pressedBgColor;
-	protected Color hoverBgColor;
+	protected Color bgColor, pressedBgColor, hoverBgColor;
 	
 	public Button(String text, int posX, int posY, int width, int height, int paddingTextX, int paddingTextY,
 			Color bgColor) {

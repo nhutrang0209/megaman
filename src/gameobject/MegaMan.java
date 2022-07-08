@@ -1,4 +1,4 @@
-		package gameobject;
+package gameobject;
 
 import state.GameWorldState;
 import effect.Animation;
@@ -12,71 +12,20 @@ public class MegaMan extends Human {
 
     public static final int RUNSPEED = 3;
     
-//    private Animation runForwardAnim, runBackAnim, runShootingForwarAnim, runShootingBackAnim;
-//    private Animation idleForwardAnim, idleBackAnim, idleShootingForwardAnim, idleShootingBackAnim;
-//    private Animation dickForwardAnim, dickBackAnim;
-//    private Animation flyForwardAnim, flyBackAnim, flyShootingForwardAnim, flyShootingBackAnim;
-//    private Animation landingForwardAnim, landingBackAnim;
-//    
-//    private Animation climWallForward, climWallBack;
-    public String name="megaMan";
-    private long lastShootingTime;
-    private boolean isShooting = false;
-    private AudioClip hurtingSound;
-    private AudioClip shooting1;
-    public AnimationHandler animationH = new AnimationHandler(name);
+
+    private long lastShootingTime;//thời gian cuối cùng megaman bắn
+    private boolean isShooting = false;//trạng thái bắn
+    private AudioClip hurtingSound, shooting1;
     
     public MegaMan(float x, float y, GameWorldState gameWorld) {
-        super(x, y, 70, 90, 0.1f, 100, gameWorld); 
+        super(x, y, 70, 90,"megaMan", 0.1f, 100, gameWorld); 
         shooting1 = CacheDataLoader.getInstance().getSound("bluefireshooting");
         hurtingSound = CacheDataLoader.getInstance().getSound("megamanhurt");
         
         setTeamType(LEAGUE_TEAM);
 
         setTimeForNoBehurt(2000*1000000);
-        
-//        runForwardAnim = CacheDataLoader.getInstance().getAnimation("run");
-//        runBackAnim = CacheDataLoader.getInstance().getAnimation("run");
-//        runBackAnim.flipAllImage();   
-//        
-//        idleForwardAnim = CacheDataLoader.getInstance().getAnimation("idle");
-//        idleBackAnim = CacheDataLoader.getInstance().getAnimation("idle");
-//        idleBackAnim.flipAllImage();
-//        
-//        dickForwardAnim = CacheDataLoader.getInstance().getAnimation("dick");
-//        dickBackAnim = CacheDataLoader.getInstance().getAnimation("dick");
-//        dickBackAnim.flipAllImage();
-//        
-//        flyForwardAnim = CacheDataLoader.getInstance().getAnimation("flyingup");
-//        flyForwardAnim.setIsRepeated(false);
-//        flyBackAnim = CacheDataLoader.getInstance().getAnimation("flyingup");
-//        flyBackAnim.setIsRepeated(false);
-//        flyBackAnim.flipAllImage();
-//        
-//        landingForwardAnim = CacheDataLoader.getInstance().getAnimation("landing");
-//        landingBackAnim = CacheDataLoader.getInstance().getAnimation("landing");
-//        landingBackAnim.flipAllImage();
-//        
-//        climWallBack = CacheDataLoader.getInstance().getAnimation("clim_wall");
-//        climWallForward = CacheDataLoader.getInstance().getAnimation("clim_wall");
-//        climWallForward.flipAllImage();
-//        
-//        behurtForwardAnim = CacheDataLoader.getInstance().getAnimation("hurting");
-//        behurtBackAnim = CacheDataLoader.getInstance().getAnimation("hurting");
-//        behurtBackAnim.flipAllImage();
-//        
-//        idleShootingForwardAnim = CacheDataLoader.getInstance().getAnimation("idleshoot");
-//        idleShootingBackAnim = CacheDataLoader.getInstance().getAnimation("idleshoot");
-//        idleShootingBackAnim.flipAllImage();
-//        
-//        runShootingForwarAnim = CacheDataLoader.getInstance().getAnimation("runshoot");
-//        runShootingBackAnim = CacheDataLoader.getInstance().getAnimation("runshoot");
-//        runShootingBackAnim.flipAllImage();
-//        
-//        flyShootingForwardAnim = CacheDataLoader.getInstance().getAnimation("flyingupshoot");
-//        flyShootingBackAnim = CacheDataLoader.getInstance().getAnimation("flyingupshoot");
-//        flyShootingBackAnim.flipAllImage();
-        
+              
     }
 
     @Override
@@ -94,9 +43,7 @@ public class MegaMan extends Human {
             animationH.landingBackAnim.Update(System.nanoTime());
             if(animationH.landingBackAnim.isLastFrame()) {
                 setIsLanding(false);
-                animationH.landingBackAnim.reset();
-                animationH.runForwardAnim.reset();
-                animationH.runBackAnim.reset();
+                animationH.MegaLanding();
             }
         }
         
@@ -104,7 +51,6 @@ public class MegaMan extends Human {
 
     @Override
     public Rectangle getBoundForCollisionWithEnemy() {
-        // TODO Auto-generated method stub
         Rectangle rect = getBoundForCollisionWithMap();
         
         if(getIsDicking()){
@@ -127,11 +73,11 @@ public class MegaMan extends Human {
         
         switch(getState()){
         
-            case ALIVE:
+            case ALIVE: 
             case NOBEHURT:
                 if(getState() == NOBEHURT && (System.nanoTime()/10000000)%2!=1)
                 {
-                    System.out.println("Plash...");
+                 //   System.out.println("Plash...");
                 }else{
                     
                     if(getIsLanding()){
@@ -139,8 +85,7 @@ public class MegaMan extends Human {
                         if(getDirection() == RIGHT_DIR){
                         	animationH.landingForwardAnim.setCurrentFrame(animationH.landingBackAnim.getCurrentFrame());
                         	animationH.landingForwardAnim.draw((int) (getPosX() - getGameWorld().camera.getPosX()), 
-                                    (int) getPosY() - (int) getGameWorld().camera.getPosY() + (getBoundForCollisionWithMap().height/2 - animationH.landingForwardAnim.getCurrentImage().getHeight()/2),
-                                    g2);
+                                    (int) getPosY() - (int) getGameWorld().camera.getPosY() + (getBoundForCollisionWithMap().height/2 - animationH.landingForwardAnim.getCurrentImage().getHeight()/2),g2);
                         }else{
                         	animationH.landingBackAnim.draw((int) (getPosX() - getGameWorld().camera.getPosX()), 
                                     (int) getPosY() - (int) getGameWorld().camera.getPosY() + (getBoundForCollisionWithMap().height/2 - animationH.landingBackAnim.getCurrentImage().getHeight()/2),
@@ -234,9 +179,6 @@ public class MegaMan extends Human {
                 break;
 
         }
-        
-        //drawBoundForCollisionWithMap(g2);
-        //drawBoundForCollisionWithEnemy(g2);
     }
 
     @Override
@@ -252,8 +194,7 @@ public class MegaMan extends Human {
         if(!getIsJumping()){
             setIsJumping(true);
             setSpeedY(-5.0f);           
-            animationH.flyBackAnim.reset();
-            animationH.flyForwardAnim.reset();
+            animationH.Megaflyreset();
         }
         // for clim wall
         else{
@@ -264,16 +205,10 @@ public class MegaMan extends Human {
             
             if(getGameWorld().physicalMap.haveCollisionWithRightWall(rectRightWall)!=null && getSpeedX() > 0){
                 setSpeedY(-5.0f);
-                //setSpeedX(-1);
-                animationH.flyBackAnim.reset();
-                animationH.flyForwardAnim.reset();
-                //setDirection(LEFT_DIR);
+                animationH.Megaflyreset();
             }else if(getGameWorld().physicalMap.haveCollisionWithLeftWall(rectLeftWall)!=null && getSpeedX() < 0){
                 setSpeedY(-5.0f);
-                //setSpeedX(1);
-                animationH.flyBackAnim.reset();
-                animationH.flyForwardAnim.reset();
-                //setDirection(RIGHT_DIR);
+                animationH.Megaflyreset();
             }
                 
         }
@@ -288,19 +223,13 @@ public class MegaMan extends Human {
     @Override
     public void standUp() {
         setIsDicking(false);
-        animationH.idleForwardAnim.reset();
-        animationH.idleBackAnim.reset();
-        animationH.dickForwardAnim.reset();
-        animationH.dickBackAnim.reset();
+        animationH.MegaStandup();
     }
 
     @Override
     public void stopRun() {
         setSpeedX(0);
-        animationH.runForwardAnim.reset();
-        animationH.runBackAnim.reset();
-        animationH.runForwardAnim.unIgnoreFrame(0);
-        animationH.runBackAnim.unIgnoreFrame(0);
+        animationH.MegaStoprun();
     }
 
     @Override
@@ -312,14 +241,14 @@ public class MegaMan extends Human {
             
             Bullet bullet = new BlueFire(getPosX(), getPosY(), getGameWorld());
             if(getDirection() == LEFT_DIR) {
-                bullet.setSpeedX(-10);
+                bullet.setSpeedX(-15);
                 bullet.setPosX(bullet.getPosX() - 40);
                 if(getSpeedX() != 0 && getSpeedY() == 0){
                     bullet.setPosX(bullet.getPosX() - 10);
                     bullet.setPosY(bullet.getPosY() - 5);
                 }
             }else {
-                bullet.setSpeedX(10);
+                bullet.setSpeedX(15);
                 bullet.setPosX(bullet.getPosX() + 40);
                 if(getSpeedX() != 0 && getSpeedY() == 0){
                     bullet.setPosX(bullet.getPosX() + 10);

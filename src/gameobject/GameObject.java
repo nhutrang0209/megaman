@@ -4,8 +4,7 @@ import state.GameWorldState;
 
 public abstract class GameObject {// các đối tượng lớn
 
-	private float posX;
-	private float posY;
+	private float posX, posY;
 	
 	private GameWorldState gameWorld;
 	
@@ -35,6 +34,6 @@ public abstract class GameObject {// các đối tượng lớn
 		return gameWorld;
 	}
 	
-	public abstract void Update();
+	public abstract void Update();//ai kế thừa thì tự viết lại 
 	
 }

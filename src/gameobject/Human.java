@@ -5,13 +5,10 @@ import java.awt.Rectangle;
 
 public abstract class Human extends ParticularObject{
 
-    private boolean isJumping;
-    private boolean isDicking;
-    
-    private boolean isLanding;
+    private boolean isJumping, isDicking, isLanding;
 
-    public Human(float x, float y, float width, float height, float mass, int blood, GameWorldState gameWorld) {
-        super(x, y, width, height, mass, blood, gameWorld);
+    public Human(float x, float y, float width, float height,String name, float mass, int blood, GameWorldState gameWorld) {
+        super(x, y, width, height,name, mass, blood, gameWorld);
         setState(ALIVE);
     }
 
@@ -58,11 +55,11 @@ public abstract class Human extends ParticularObject{
         
             if(!isLanding){
 
-                setPosX(getPosX() + getSpeedX());
+                setPosX(getPosX() + getSpeedX());//cập nhật vị trí X
 
 
                 if(getDirection() == LEFT_DIR && 
-                        getGameWorld().physicalMap.haveCollisionWithLeftWall(getBoundForCollisionWithMap())!=null){
+                        getGameWorld().physicalMap.haveCollisionWithLeftWall(getBoundForCollisionWithMap())!=null){// va chạm xảy ra
 
                     Rectangle rectLeftWall = getGameWorld().physicalMap.haveCollisionWithLeftWall(getBoundForCollisionWithMap());
                     setPosX(rectLeftWall.x + rectLeftWall.width + getWidth()/2);
@@ -89,18 +86,18 @@ public abstract class Human extends ParticularObject{
                 
                 Rectangle rectTop = getGameWorld().physicalMap.haveCollisionWithTop(boundForCollisionWithMapFuture);
                 
-                if(rectTop !=null){
+                if(rectTop !=null){//chạm trần
                     
                     setSpeedY(0);
-                    setPosY(rectTop.y + getGameWorld().physicalMap.getTileSize() + getHeight()/2);
+                    setPosY(rectTop.y + getGameWorld().physicalMap.getTileSize() + getHeight()/2);// lấy thứ tự của block
                     
-                }else if(rectLand != null){
-                    setIsJumping(false);
-                    if(getSpeedY() > 0) setIsLanding(true);
+                }else if(rectLand != null){//chạm đất
+                    setIsJumping(false);//bỏ bay
+                    if(getSpeedY() > 0) setIsLanding(true);//đang tiếp đất
                     setSpeedY(0);
                     setPosY(rectLand.y - getHeight()/2 - 1);
                 }else{
-                    setIsJumping(true);
+                    setIsJumping(true);//không chạm đất, không chạm trần thì bay
                     setSpeedY(getSpeedY() + getMass());
                     setPosY(getPosY() + getSpeedY());
                 }

@@ -7,14 +7,10 @@ package gameobject;
 
 import state.GameWorldState;
 
-/**
- *
- * @author phamn
- */
 public class BulletManager extends ParticularObjectManager {
 
     public BulletManager(GameWorldState gameWorld) {
-        super(gameWorld);
+        super(gameWorld);//khởi tạo tương tự ParticularObjMn
     }
 
     @Override
@@ -26,8 +22,7 @@ public class BulletManager extends ParticularObjectManager {
                 ParticularObject object = particularObjects.get(id);
                 
                 if(object.isObjectOutOfCameraView() || object.getState() == ParticularObject.DEATH){
-                    particularObjects.remove(id);
-                    //System.out.println("Remove");
+                    particularObjects.remove(id);// biến mất
                 }
             }
         }

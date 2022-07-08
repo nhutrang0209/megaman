@@ -9,10 +9,6 @@ import state.GameWorldState;
 import state.State;
 import java.awt.event.KeyEvent;
 
-/**
- *
- * @author phamn
- */
 public class InputManager {
     
     private State gameState;

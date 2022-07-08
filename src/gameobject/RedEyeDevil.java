@@ -13,26 +13,19 @@ import java.applet.AudioClip;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-/**
- *
- * @author phamn
- */
 public class RedEyeDevil extends ParticularObject {
 
-	public String name="redeye";
+
     private long startTimeToShoot;
     
     private AudioClip shooting;
-    
-    public AnimationHandler animationH=new AnimationHandler(name);
+
+
     
     public RedEyeDevil(float x, float y, GameWorldState gameWorld) {
-        super(x, y, 127, 89, 0, 100, gameWorld);
-//        animationH.backAnim = CacheDataLoader.getInstance().getAnimation("redeye");
-//        animationH.forwardAnim = CacheDataLoader.getInstance().getAnimation("redeye");
-//        animationH.forwardAnim.flipAllImage();
+        super(x, y, 127, 89,"redeye", 0, 100, gameWorld);
         startTimeToShoot = 0;
-        setDamage(10);
+        setDamage(10);//chạm mất 10 máu
         setTimeForNoBehurt(300000000);
         shooting = CacheDataLoader.getInstance().getSound("redeyeshooting");
     }
@@ -42,7 +35,7 @@ public class RedEyeDevil extends ParticularObject {
     
         shooting.play();
         Bullet bullet = new RedEyeBullet(getPosX(), getPosY(), getGameWorld());
-        if(getDirection() == LEFT_DIR) bullet.setSpeedX(-8);
+        if(getDirection() == LEFT_DIR) bullet.setSpeedX(-8);//set vận tốc đạn
         else bullet.setSpeedX(8);
         bullet.setTeamType(getTeamType());
         getGameWorld().bulletManager.addObject(bullet);
@@ -52,10 +45,10 @@ public class RedEyeDevil extends ParticularObject {
     
     public void Update(){
         super.Update();
-        if(System.nanoTime() - startTimeToShoot > 1000*10000000){
+        if(System.nanoTime() - startTimeToShoot > 1000*10000000){//1s bắn 1 lần
             attack();
             System.out.println("Red Eye attack");
-            startTimeToShoot = System.nanoTime();
+            startTimeToShoot = System.nanoTime();//set lại thời gian nó vừa bắn
         }
     }
     
@@ -85,7 +78,6 @@ public class RedEyeDevil extends ParticularObject {
                 }
             }
         }
-        //drawBoundForCollisionWithEnemy(g2);
     }
     
 }

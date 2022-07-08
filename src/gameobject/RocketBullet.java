@@ -8,25 +8,24 @@ import java.awt.Rectangle;
 
 public class RocketBullet extends Bullet{
 	
-    private Animation forwardBulletAnimUp, forwardBulletAnimDown, forwardBulletAnim;
-    private Animation backBulletAnimUp, backBulletAnimDown, backBulletAnim;
+
 
     private long startTimeForChangeSpeedY;
     
     public RocketBullet(float x, float y, GameWorldState gameWorld) {
         
-            super(x, y, 30, 30, 1.0f, 10, gameWorld);
+            super(x, y, 30, 30,"rocket", 1.0f, 10, gameWorld);
             
-            backBulletAnimUp = CacheDataLoader.getInstance().getAnimation("rocketUp");
-            backBulletAnimDown = CacheDataLoader.getInstance().getAnimation("rocketDown");
-            backBulletAnim = CacheDataLoader.getInstance().getAnimation("rocket");
-            
-            forwardBulletAnimUp = CacheDataLoader.getInstance().getAnimation("rocketUp");
-            forwardBulletAnimUp.flipAllImage();
-            forwardBulletAnimDown = CacheDataLoader.getInstance().getAnimation("rocketDown");
-            forwardBulletAnimDown.flipAllImage();
-            forwardBulletAnim = CacheDataLoader.getInstance().getAnimation("rocket");
-            forwardBulletAnim.flipAllImage();
+//            backBulletAnimUp = CacheDataLoader.getInstance().getAnimation("rocketUp");
+//            backBulletAnimDown = CacheDataLoader.getInstance().getAnimation("rocketDown");
+//            backBulletAnim = CacheDataLoader.getInstance().getAnimation("rocket");
+//            
+//            forwardBulletAnimUp = CacheDataLoader.getInstance().getAnimation("rocketUp");
+//            forwardBulletAnimUp.flipAllImage();
+//            forwardBulletAnimDown = CacheDataLoader.getInstance().getAnimation("rocketDown");
+//            forwardBulletAnimDown.flipAllImage();
+//            forwardBulletAnim = CacheDataLoader.getInstance().getAnimation("rocket");
+//            forwardBulletAnim.flipAllImage();
 
     }
   
@@ -41,18 +40,18 @@ public class RocketBullet extends Bullet{
             // TODO Auto-generated method stub
         if(getSpeedX() > 0){  
             if(getSpeedY() > 0){
-                forwardBulletAnimDown.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY(), g2);
+            	animationH.forwardBulletAnimDown.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY(), g2);
             }else if(getSpeedY() < 0){
-                forwardBulletAnimUp.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY(), g2);
+            	animationH.forwardBulletAnimUp.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY(), g2);
             }else
-                forwardBulletAnim.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY(), g2);
+            	animationH.forwardBulletAnim.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY(), g2);
         }else{
             if(getSpeedY() > 0){
-                backBulletAnimDown.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY(), g2);
+            	animationH.backBulletAnimDown.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY(), g2);
             }else if(getSpeedY() < 0){
-                backBulletAnimUp.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY(), g2);
+            	animationH.backBulletAnimUp.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY(), g2);
             }else
-                backBulletAnim.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY(), g2);
+            	animationH.backBulletAnim.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY(), g2);
         }
         //drawBoundForCollisionWithEnemy(g2);
     }

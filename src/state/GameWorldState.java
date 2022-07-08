@@ -5,7 +5,6 @@ import effect.FrameImage;
 import gameobject.BackgroundMap;
 import gameobject.BulletManager;
 import gameobject.Camera;
-import gameobject.DarkRaise;
 import gameobject.FinalBoss;
 import gameobject.MegaMan;
 import gameobject.ParticularObject;
@@ -38,16 +37,11 @@ public class GameWorldState extends State {
     public Camera camera;
 
     public static final int finalBossX = 3600;
-    
-    public static final int INIT_GAME = 0;
-    public static final int TUTORIAL = 1;
-    public static final int GAMEPLAY = 2;
-    public static final int GAMEOVER = 3;
-    public static final int GAMEWIN = 4;
-    public static final int PAUSEGAME = 5;
-    
-    public static final int INTROGAME = 0;
-    public static final int MEETFINALBOSS = 1;
+
+    // các trạng thái của game
+    public static final int INIT_GAME = 0, TUTORIAL = 1;
+    public static final int GAMEPLAY = 2, GAMEOVER = 3, GAMEWIN = 4, PAUSEGAME = 5;
+    public static final int INTROGAME = 0, MEETFINALBOSS = 1;
     
     public int openIntroGameY = 0;
     public int state = INIT_GAME;
@@ -65,12 +59,12 @@ public class GameWorldState extends State {
     
     FrameImage avatar = CacheDataLoader.getInstance().getFrameImage("avatar");
     
-    
+    // số mạng của nhân vật
     private int numberOfLife = 3;
     
     public AudioClip bgMusic;
     
-    public GameWorldState(GamePanel gamePanel){
+    public GameWorldState(GamePanel gamePanel){ // khởi tạo lúc bắt đầu game
             super(gamePanel);
         
         texts1[0] = "We are heros, and our mission is protecting our Home\nEarth....";
@@ -97,7 +91,7 @@ public class GameWorldState extends State {
         
     }
     
-    private void initEnemies(){
+    private void initEnemies(){  // tạo các kẻ địch
         ParticularObject redeye = new RedEyeDevil(1250, 410, this);
         redeye.setDirection(ParticularObject.LEFT_DIR);
         redeye.setTeamType(ParticularObject.ENEMY_TEAM);
@@ -107,15 +101,7 @@ public class GameWorldState extends State {
         smallRedGun.setDirection(ParticularObject.LEFT_DIR);
         smallRedGun.setTeamType(ParticularObject.ENEMY_TEAM);
         particularObjectManager.addObject(smallRedGun);
-        
-        ParticularObject darkraise = new DarkRaise(2000, 200, this);
-        darkraise.setTeamType(ParticularObject.ENEMY_TEAM);
-        particularObjectManager.addObject(darkraise);
-        
-        ParticularObject darkraise2 = new DarkRaise(2800, 350, this);
-        darkraise2.setTeamType(ParticularObject.ENEMY_TEAM);
-        particularObjectManager.addObject(darkraise2);
-        
+                
         ParticularObject robotR = new RobotR(900, 400, this);
         robotR.setTeamType(ParticularObject.ENEMY_TEAM);
         particularObjectManager.addObject(robotR);
@@ -139,17 +125,10 @@ public class GameWorldState extends State {
         redeye4.setDirection(ParticularObject.RIGHT_DIR);
         redeye4.setTeamType(ParticularObject.ENEMY_TEAM);
         particularObjectManager.addObject(redeye4);
-        
-
-        ParticularObject darkraise3 = new DarkRaise(750, 650, this);
-        darkraise3.setTeamType(ParticularObject.ENEMY_TEAM);
-        particularObjectManager.addObject(darkraise3);
-        
+                
         ParticularObject robotR3 = new RobotR(1500, 1150, this);
         robotR3.setTeamType(ParticularObject.ENEMY_TEAM);
         particularObjectManager.addObject(robotR3);
-        
-        
         
         ParticularObject smallRedGun2 = new SmallRedGun(1700, 980, this);
         smallRedGun2.setDirection(ParticularObject.LEFT_DIR);
@@ -162,10 +141,10 @@ public class GameWorldState extends State {
         this.state = state;
     }
     
-    private void TutorialUpdate(){
+    private void TutorialUpdate(){ // các hướng dẫn của game khi bắt đầu game hoặc lúc gặp boss
         switch(tutorialState){
             case INTROGAME:
-                
+        
                 if(storyTutorial == 0){
                     if(openIntroGameY < 450) {
                         openIntroGameY+=4;
@@ -221,7 +200,7 @@ public class GameWorldState extends State {
             g2.drawString(str, x, y+=g2.getFontMetrics().getHeight());
     }
     
-    private void TutorialRender(Graphics2D g2){
+    private void TutorialRender(Graphics2D g2){ //render ra các hướng dẫn game
         switch(tutorialState){
             case INTROGAME:
                 int yMid = GameFrame.SCREEN_HEIGHT/2 - 15;
@@ -254,7 +233,7 @@ public class GameWorldState extends State {
         }
     }
     
-    public void Update(){
+    public void Update(){  // cập nhật trạng thái game ở lúc bắt đầu game, chơi game, hướng dẫn, hết game, chiến thắng, thua game
         
         switch(state){
             case INIT_GAME:
@@ -313,20 +292,14 @@ public class GameWorldState extends State {
 
     }
 
-    public void Render(){
+    public void Render(){ // tạo giao diện ở các trạng thái khi lúc bắt đầu game, chơi game, hướng dẫn, hết game, chiến thắng, thua game
 
         Graphics2D g2 = (Graphics2D) bufferedImage.getGraphics();
 
         if(g2!=null){
 
-            // NOTE: two lines below make the error splash white screen....
-            // need to remove this line
-            //g2.setColor(Color.WHITE);
-            //g2.fillRect(0, 0, GameFrame.SCREEN_WIDTH, GameFrame.SCREEN_HEIGHT);
-            
-            
-            //physicalMap.draw(g2);
-            
+            // NOTE: two lines below make the error splash white screen  need to remove this line
+                        
             switch(state){
                 case INIT_GAME:
                     g2.setColor(Color.BLACK);
@@ -388,16 +361,12 @@ public class GameWorldState extends State {
     }
 
     @Override
-    public void setPressedButton(int code) {
+    public void setPressedButton(int code) { // xử lý các nút di chuyển, tấn công của nhân vật
        switch(code){
             
             case KeyEvent.VK_DOWN:
                 megaMan.dick();
                 break;
-            case KeyEvent.VK_UP:
-            	megaMan.jump();
-            	break;
-            	
                 
             case KeyEvent.VK_RIGHT:
                 megaMan.setDirection(megaMan.RIGHT_DIR);
@@ -431,6 +400,10 @@ public class GameWorldState extends State {
                         switchState(GameWorldState.GAMEPLAY);
                     }
                 }
+                break;
+                
+            case KeyEvent.VK_UP:
+                megaMan.jump();
                 break;
                 
             case KeyEvent.VK_F:

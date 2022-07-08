@@ -20,16 +20,11 @@ import java.awt.Rectangle;
  */
 public class SmallRedGun extends ParticularObject{
 
-	public String name="smallredgun";
     
     private long startTimeToShoot;
-    
-    public AnimationHandler animationH=new AnimationHandler(name);
+
     public SmallRedGun(float x, float y, GameWorldState gameWorld) {
-        super(x, y, 127, 89, 0, 100, gameWorld);
-//        backAnim = CacheDataLoader.getInstance().getAnimation("smallredgun");
-//        forwardAnim = CacheDataLoader.getInstance().getAnimation("smallredgun");
-//        forwardAnim.flipAllImage();
+        super(x, y, 127, 89,"smallredgun", 0, 100, gameWorld);
         startTimeToShoot = 0;
         setTimeForNoBehurt(300000000);
     }

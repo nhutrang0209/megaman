@@ -12,26 +12,20 @@ import java.net.URL;
 import java.util.Hashtable;
 import javax.imageio.ImageIO;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author phamn
- */
+// lop dung de chua cac du lieu cho game
+// cac du lieu se duoc tai len trong file du lieu lay tu file data
 public class CacheDataLoader {
     
-    private static CacheDataLoader instance = null;
+    private static CacheDataLoader instance = null; // instance cua class CacheDataLoader
     
+    // Duong dan cua cac file du lieu
     private String framefile = "data/frame.txt";
     private String animationfile = "data/animation.txt";
     private String physmapfile = "data/phys_map.txt";
     private String backgroundmapfile = "data/background_map.txt";
     private String soundfile = "data/sounds.txt";
     
+    //cac cau truc du lieu dung de luu tat ca du lieu lay tu file du lieu
     private Hashtable<String, FrameImage> frameImages; 
     private Hashtable<String, Animation> animations;
     private Hashtable<String, AudioClip> sounds;
@@ -39,14 +33,17 @@ public class CacheDataLoader {
     private int[][] phys_map;
     private int[][] background_map;
     
+    // ham khoi tao chi dung trong class
     private CacheDataLoader() {}
-
-    public static CacheDataLoader getInstance(){//tạo 1 đối tượng  
+    
+    // phuong thuc lay ra instance cua class CacheDataLoader
+    public static CacheDataLoader getInstance(){
         if(instance == null)
             instance  = new CacheDataLoader();
         return instance;
     }
     
+    // cac getter dung de tuy cap cac thuoc tinh du lieu
     public AudioClip getSound(String name){
         return instance.sounds.get(name);
     }
@@ -73,6 +70,7 @@ public class CacheDataLoader {
         return instance.background_map;
     }
     
+    // load tat ca du lieu cho game
     public void LoadData()throws IOException{
         
         LoadFrame();
@@ -83,51 +81,57 @@ public class CacheDataLoader {
         
     }
     
+    // load tat ca du lieu tu file am thanh vao sounds
     public void LoadSounds() throws IOException{
+        
         sounds = new Hashtable<String, AudioClip>();
         
+        // cac doi tuong dung de doc file text
         FileReader fr = new FileReader(soundfile);
         BufferedReader br = new BufferedReader(fr);
         
         String line = null;
         
-        if(br.readLine()==null) { // no line = "" or something like that
+        if(br.readLine()== null) { // khong co du lieu nem vao ngoai le
             System.out.println("No data");
             throw new IOException();
         }
         else {
             
             fr = new FileReader(soundfile);
-            br = new BufferedReader(fr);
+            // doi tuong dung doc file
+            br = new BufferedReader(fr); // dua con tro ve dau file
             
+            // bo qua dong trong
             while((line = br.readLine()).equals(""));
             
             int n = Integer.parseInt(line);
             
+            // doc tat ca du lieu tu file data cho vao sounds
             for(int i = 0;i < n; i ++){
                 
                 AudioClip audioClip = null;
                 while((line = br.readLine()).equals(""));
 
-                String[] str = line.split(" ");
-                String name = str[0];
-                
+                String[] str = line.split(" "); // dung de tach cac chu cach nhau boi dau " "
+                String name = str[0];                
                 String path = str[1];
 
                 try {
                    audioClip =  Applet.newAudioClip(new URL("file","",str[1]));
 
                 } catch (MalformedURLException ex) {}
-                
+                // cho du lieu da doc duoc vao sounds
                 instance.sounds.put(name, audioClip);
             }
             
         }
-        
+        // dong flie
         br.close();
         
     }
     
+    // load tat ca du lieu ve backgroundmap vao game 
     public void LoadBackgroundMap() throws IOException{
         
         FileReader fr = new FileReader(backgroundmapfile);
@@ -150,18 +154,18 @@ public class CacheDataLoader {
                 instance.background_map[i][j] = Integer.parseInt(str[j]);
         }
         
-//        for(int i = 0;i < numberOfRows;i++){
-//            
-//            for(int j = 0;j<numberOfColumns;j++)
-//                System.out.print(" "+instance.background_map[i][j]);
-//            
-//            System.out.println();
-//        }
+        for(int i = 0;i < numberOfRows;i++){
+            
+            for(int j = 0;j<numberOfColumns;j++)
+                System.out.print(" "+instance.background_map[i][j]);
+            
+            System.out.println();
+        }
         
         br.close();
         
     }
-    
+    // load tat ca du lieu cua map vat ly vao game
     public void LoadPhysMap() throws IOException{
         
         FileReader fr = new FileReader(physmapfile);
@@ -184,17 +188,18 @@ public class CacheDataLoader {
                 instance.phys_map[i][j] = Integer.parseInt(str[j]);
         }
         
-//        for(int i = 0;i < numberOfRows;i++){
-//            
-//            for(int j = 0;j<numberOfColumns;j++)
-//                System.out.print(" "+instance.phys_map[i][j]);
-//            
-//            System.out.println();
-//        }
+        for(int i = 0;i < numberOfRows;i++){
+            
+            for(int j = 0;j<numberOfColumns;j++)
+                System.out.print(" "+instance.phys_map[i][j]);
+            
+            System.out.println();
+        }
         
         br.close();
         
     }
+    // load tat ca animation vao game
     public void LoadAnimation() throws IOException { 
         
         animations = new Hashtable<String, Animation>();
@@ -238,6 +243,7 @@ public class CacheDataLoader {
         br.close();
     }
     
+    // load tat ca frameimage vao game
     public void LoadFrame() throws IOException{
         
         frameImages = new Hashtable<String, FrameImage>();
@@ -299,7 +305,7 @@ public class CacheDataLoader {
                     frame.setImage(image);
                 }
                 
-                instance.frameImages.put(frame.getName(), frame);//push vào hash
+                instance.frameImages.put(frame.getName(), frame);//push vào frameImages
             }
             
         }
