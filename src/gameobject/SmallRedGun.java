@@ -14,10 +14,6 @@ import static gameobject.ParticularObject.NOBEHURT;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-/**
- *
- * @author phamn
- */
 public class SmallRedGun extends ParticularObject{
 
     

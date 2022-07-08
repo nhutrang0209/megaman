@@ -12,22 +12,17 @@ public class RobotRBullet extends Bullet{
     
     public RobotRBullet(float x, float y, GameWorldState gameWorld) {
         super(x, y, 60, 30,"robotRbullet" ,1.0f, 10, gameWorld);
-//        forwardBulletAnim = CacheDataLoader.getInstance().getAnimation("robotRbullet");
-//        backBulletAnim = CacheDataLoader.getInstance().getAnimation("robotRbullet");
-//        backBulletAnim.flipAllImage();
     }
 
     
     
     @Override
     public Rectangle getBoundForCollisionWithEnemy() {
-        // TODO Auto-generated method stub
         return getBoundForCollisionWithMap();
     }
 
     @Override
     public void draw(Graphics2D g2) {
-            // TODO Auto-generated method stub
         if(getSpeedX() > 0){          
         	animationH.forwardBulletAnim.Update(System.nanoTime());
         	animationH.forwardBulletAnim.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY(), g2);

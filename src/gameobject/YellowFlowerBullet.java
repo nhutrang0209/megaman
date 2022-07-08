@@ -11,9 +11,6 @@ public class YellowFlowerBullet extends Bullet{
     
     public YellowFlowerBullet(float x, float y, GameWorldState gameWorld) {
             super(x, y, 30, 30,"yellow_flower_bullet", 1.0f, 10, gameWorld);
-//            forwardBulletAnim = CacheDataLoader.getInstance().getAnimation("yellow_flower_bullet");
-//            backBulletAnim = CacheDataLoader.getInstance().getAnimation("yellow_flower_bullet");
-//            backBulletAnim.flipAllImage();
     }
 
     
