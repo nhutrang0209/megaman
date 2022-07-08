@@ -30,7 +30,7 @@ public class BlueFire extends Bullet{
             animationH.forwardBulletAnim.Update(System.nanoTime());
             animationH.forwardBulletAnim.draw((int) (getPosX() - getGameWorld().camera.getPosX()), (int) getPosY() - (int) getGameWorld().camera.getPosY(), g2);
         }else{
-            if(animationH.BulletFMoving()){
+            if(animationH.BulletBMoving()){
             	animationH.BulletBIgnore012();
             }
             animationH.backBulletAnim.Update(System.nanoTime());
